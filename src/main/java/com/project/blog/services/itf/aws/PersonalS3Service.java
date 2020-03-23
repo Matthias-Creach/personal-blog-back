@@ -7,7 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.amazonaws.services.s3.model.Bucket;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
 
-public interface ImagesService {
+public interface PersonalS3Service {
 	
 	//Bucket actions
 	Bucket createBucket(String bucketName);
@@ -15,4 +15,5 @@ public interface ImagesService {
 
 	String putImageToS3(MultipartFile file, String s3Path, String s3FileName);
 	List<S3ObjectSummary> getAllImages(String prefix);
+	
 }

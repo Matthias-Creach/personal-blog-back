@@ -18,7 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.project.blog.models.dto.s3.PersonalFileDTO;
 import com.project.blog.models.entities.s3.PersonalFile;
 import com.project.blog.models.entities.s3.PersonalFileKey;
-import com.project.blog.services.impl.aws.s3.PersonalFileServiceImpl;
+import com.project.blog.services.impl.file_manager.PersonalFileServiceImpl;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController

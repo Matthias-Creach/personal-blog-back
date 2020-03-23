@@ -1,4 +1,4 @@
-package com.project.blog.services.impl.aws.s3;
+package com.project.blog.services.impl.file_manager;
 
 import java.util.List;
 
@@ -10,9 +10,9 @@ import com.project.blog.models.entities.s3.PersonalFile;
 import com.project.blog.models.entities.s3.PersonalFileKey;
 import com.project.blog.models.entities.s3.PersonalFolder;
 import com.project.blog.repositories.s3.PersonalFileRepository;
-import com.project.blog.services.impl.aws.ImageServiceImpl;
-import com.project.blog.services.itf.aws.s3.PersonalFileService;
-import com.project.blog.services.itf.aws.s3.PersonalFolderService;
+import com.project.blog.services.impl.aws.PersonalS3ServiceImpl;
+import com.project.blog.services.itf.file_manager.PersonalFileService;
+import com.project.blog.services.itf.file_manager.PersonalFolderService;
 
 @Service
 public class PersonalFileServiceImpl implements PersonalFileService {
@@ -24,7 +24,7 @@ public class PersonalFileServiceImpl implements PersonalFileService {
 	private PersonalFolderService folderService;
 	
 	@Autowired
-	private ImageServiceImpl imageService;
+	private PersonalS3ServiceImpl imageService;
 
 	@Override
 	public List<PersonalFile> getObjectsByFolder(String folderPath) {

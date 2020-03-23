@@ -5,7 +5,7 @@ import java.util.List;
 public class PersonalFolderDTO {
 	
 	private String name;
-	private String parent_name;
+	private String parent;
 	private String path;
 	private List<PersonalFolderDTO> children;
 	private List<PersonalFileDTO> files;
@@ -17,16 +17,17 @@ public class PersonalFolderDTO {
 	public PersonalFolderDTO(String name, String parent_name, String path, List<PersonalFolderDTO> children, List<PersonalFileDTO> files) {
 		super();
 		this.name = name;
-		this.parent_name = parent_name;
+		this.parent = parent_name;
 		this.path = path;
 		this.children = children;
 		this.files = files;
 	}
-	public String getParent_name() {
-		return parent_name;
+	
+	public String getParent() {
+		return parent;
 	}
-	public void setParent_name(String parent_name) {
-		this.parent_name = parent_name;
+	public void setParent(String parent) {
+		this.parent = parent;
 	}
 	public List<PersonalFileDTO> getFiles() {
 		return files;
@@ -39,12 +40,6 @@ public class PersonalFolderDTO {
 	}
 	public void setName(String name) {
 		this.name = name;
-	}
-	public String getParent() {
-		return parent_name;
-	}
-	public void setParent(String parent_name) {
-		this.parent_name = parent_name;
 	}
 	public String getPath() {
 		return path;

@@ -7,7 +7,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.project.blog.models.dto.ArticleDTO;
 import com.project.blog.models.entities.Article;
 import com.project.blog.repositories.ArticleRepository;
 import com.project.blog.repositories.UserRepository;
@@ -28,13 +27,13 @@ public class ArticleServiceImpl implements ArticleService {
 	
 	@Override
 	public List<Article> getAllArticles() {
-		List<Article> listArticles = articleRepository.findAll();
+		List<Article> listArticles = articleRepository.findAllByOrderByReleaseDateDesc();
 		return listArticles;
 	}
 
 	@Override
 	public List<Article> getPublicArticles() {
-		List<Article> listArticles = articleRepository.findByIsPrivateFalse();
+		List<Article> listArticles = articleRepository.findByIsPrivateFalseOrderByReleaseDateDesc();
 		return listArticles;
 	}
 	

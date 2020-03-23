@@ -1,4 +1,4 @@
-package com.project.blog.services.impl.aws.s3;
+package com.project.blog.services.impl.file_manager;
 
 import java.util.List;
 import java.util.Optional;
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.project.blog.models.entities.s3.PersonalFolder;
 import com.project.blog.repositories.s3.PersonalFolderRepository;
-import com.project.blog.services.itf.aws.s3.PersonalFolderService;
+import com.project.blog.services.itf.file_manager.PersonalFolderService;
 
 @Service
 public class PersonalFolderServiceImpl implements PersonalFolderService {
@@ -37,13 +37,16 @@ public class PersonalFolderServiceImpl implements PersonalFolderService {
 
 	@Override
 	public PersonalFolder createFolder(PersonalFolder folderEntity, String parentPath) {
+		
 		Optional<PersonalFolder> parentFolder = folderRepository.findById(parentPath);
 		if(parentFolder.isPresent()) {
-			folderEntity.setParent(parentFolder.get());
+			
+			folderEntity.setParent(parentFolder.get());			
 			
 			String path = parentPath + folderEntity.getName() + "/";
+			
 			if(folderRepository.existsById(path)) {
-				return null;
+				return null;	//Already exists
 			}else {
 				folderEntity.setPath(path);
 				folderRepository.save(folderEntity);
@@ -51,8 +54,9 @@ public class PersonalFolderServiceImpl implements PersonalFolderService {
 			}
 			
 		}else {
-			return null;
+			return null;	// Parent doesn't exists
 		}
+		
 	}
 
 	@Override

@@ -14,7 +14,9 @@ import com.amazonaws.AmazonServiceException;
 import com.amazonaws.auth.AWSCredentialsProvider;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
+import com.amazonaws.auth.InstanceProfileCredentialsProvider;
 import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.AmazonS3Exception;
 import com.amazonaws.services.s3.model.Bucket;
@@ -23,19 +25,25 @@ import com.amazonaws.services.s3.model.ListObjectsV2Request;
 import com.amazonaws.services.s3.model.ListObjectsV2Result;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
-import com.project.blog.services.itf.aws.ImagesService;
+import com.project.blog.services.itf.aws.PersonalS3Service;
 
 @Service
-public class ImageServiceImpl implements ImagesService {
+public class PersonalS3ServiceImpl implements PersonalS3Service {
 	
-	private final static Logger logger = LoggerFactory.getLogger(ImageServiceImpl.class);
-	private final static String BUCKET_NAME = "blog-manon";
-	private static final String REGION = "eu-west-3";
+	private final static Logger logger = LoggerFactory.getLogger(PersonalS3ServiceImpl.class);
+	
+	@Value("${app.aws.s3.url}")
+	private String AWS_S3_URL;
+	
+	@Value("${app.aws.s3.bucket}")
+	private String BUCKET_NAME;
+	
+	@Value("${app.aws.s3.region}")
+	private String AWS_REGION;
 	
 	@Value("${server.home.directory}")
 	private String SERVER_HOME_DIRECTORY;
 	
-	private String AWS_S3_URL = "https://blog-manon.s3.eu-west-3.amazonaws.com/";
 	
 	@Override
 	public List<S3ObjectSummary> getAllImages(String prefix) {
@@ -134,13 +142,17 @@ public class ImageServiceImpl implements ImagesService {
     }
 	
 	private AmazonS3 getAmazonClient() {
+		
 		AWSCredentialsProvider awsCredentials = DefaultAWSCredentialsProviderChain.getInstance();
+		
 		final AmazonS3 s3 = AmazonS3ClientBuilder
 				.standard()
 				.withCredentials(new AWSStaticCredentialsProvider(awsCredentials.getCredentials()))
-				.withRegion(REGION)
+				.withRegion(AWS_REGION)
 				.build();
+		
 		return s3;
+		
 	}
 
 }

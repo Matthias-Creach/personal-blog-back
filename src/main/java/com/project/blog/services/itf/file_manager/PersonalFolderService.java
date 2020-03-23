@@ -1,4 +1,4 @@
-package com.project.blog.services.itf.aws.s3;
+package com.project.blog.services.itf.file_manager;
 
 import java.util.List;
 

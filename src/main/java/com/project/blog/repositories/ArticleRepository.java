@@ -9,8 +9,10 @@ import com.project.blog.models.entities.User;
 
 public interface ArticleRepository extends JpaRepository<Article, Long>{
 
-	public List<Article> findByIsPrivateFalse();
+	List<Article> findAllByOrderByReleaseDateDesc();
 	
-	public List<Article> findByUser(User user);
+	List<Article> findByIsPrivateFalseOrderByReleaseDateDesc();
+	
+	List<Article> findByUser(User user);
 
 }

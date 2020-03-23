@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +18,7 @@ import com.project.blog.models.dto.s3.PersonalFileDTO;
 import com.project.blog.models.dto.s3.PersonalFolderDTO;
 import com.project.blog.models.entities.s3.PersonalFile;
 import com.project.blog.models.entities.s3.PersonalFolder;
-import com.project.blog.services.itf.aws.s3.PersonalFolderService;
+import com.project.blog.services.itf.file_manager.PersonalFolderService;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -45,7 +44,7 @@ public class PersonalFolderController {
 	}
 	
 	@GetMapping("/")
-	public ResponseEntity<PersonalFolderDTO> getArchitecture(@RequestParam String path){
+	public ResponseEntity<PersonalFolderDTO> getFolder(@RequestParam String path){
 		PersonalFolder architecture = folderService.getFolderByPath(path);
 		if(architecture != null) {
 			return ResponseEntity.ok().body(convertToDto(architecture));
@@ -55,19 +54,21 @@ public class PersonalFolderController {
 	}
 	
 	@PostMapping("/")
-	public ResponseEntity<PersonalFolderDTO> createS3Architecture(@RequestParam String parentPath, @RequestBody PersonalFolderDTO s3ArchitectureDto){
+	public ResponseEntity<PersonalFolderDTO> createFolder(@RequestBody PersonalFolderDTO folderDto){
 		
-		PersonalFolder entity = convertToEntity(s3ArchitectureDto);
+		PersonalFolder entity = convertToEntity(folderDto);
+		
 		if(entity == null) {
 			return ResponseEntity.badRequest().build();
 		}else {
-			PersonalFolder newS3Architecture = folderService.createFolder(entity, parentPath);
+			PersonalFolder newS3Architecture = folderService.createFolder(entity, folderDto.getParent());
 			if(newS3Architecture != null) {
 				return ResponseEntity.ok().body(convertToDto(newS3Architecture));
 			}else {
 				return ResponseEntity.badRequest().build();
 			}
 		}
+		
 	}
 	
 	@DeleteMapping("/")
